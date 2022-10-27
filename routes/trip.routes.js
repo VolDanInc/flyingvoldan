@@ -7,7 +7,7 @@ const Trip = require("../models/Trip.model");
 
 router.get("/trips", (req, res, next)=> {
     Trip.find()
-    .populate("aircraft")
+    //.populate("aircraft")
     .then(tripsFromDb => {
         // const {aircraftId, startTrip, duration} = 
         res.status(201).json(tripsFromDb)
