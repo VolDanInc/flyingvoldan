@@ -10,7 +10,7 @@ router.get("/trips", (req, res, next)=> {
     .populate("aircraft")
     .then(tripsFromDb => {
         // const {aircraftId, startTrip, duration} = 
-        res.status(201).json(req.body)
+        res.status(201).json(tripsFromDb)
     })
     .catch( err => {
         console.log("error getting trips from DB", err);
