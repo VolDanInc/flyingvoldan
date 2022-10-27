@@ -40,4 +40,40 @@ router.get("/trips", (req, res, next)=> {
   
   })
 
+//UPDATE: trips
+
+router.post("/trips/:tripId", (req, res, next)=> {
+
+  return Trip.findByIdAndUpdate(req.params.tripId, req.body, {new: true})
+  .then(trip => {
+      
+      res.status(201).json( trip);
+  })
+  .catch( err => {
+      console.log("error creating trips from DB", err);
+      next(err);
+    })
+});
+
+//DELETE: trips
+
+router.delete("/trips/:tripId", (req, res, next) => {
+const {tripId} = req.params;
+
+  // if(mongoose.Types.ObjectId.isValid(aircraftId)){
+  //     res.status(400).json({message: "Id is not valid"});
+  //     return;
+  // }
+
+  Trip.findByIdAndRemove(tripId)
+  .then(()=>{
+      res.json({message: `The trip with ID:${tripId} is removed successfully`})
+  })
+  .catch( err => {
+      console.log("error deleting trips from DB", err);
+      next(err);
+    })
+})
+
+
 module.exports = router

@@ -3,7 +3,8 @@ const {Schema, model} = mongoose;
 
 const tripSchema = new Schema (
   {
-aircraftId: {type: Schema.Types.ObjectId, ref: "Aircraft"},
+aircraftId: String,
+// {type: Schema.Types.ObjectId, ref: "Aircraft"},
 startTrip: String,
 duration: {
     type: String,
