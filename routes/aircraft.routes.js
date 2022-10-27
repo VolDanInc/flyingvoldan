@@ -36,10 +36,10 @@ router.post("/aircraft/:aircraftId", (req, res, next)=> {
 
     const airId = req.body.aircraftId;
 
-    return Aircraft.findById(airId)
+    return Aircraft.findByIdAndUpdate(airId, req.body)
     .then(aircraft => {
         // const {aircraftId, startTrip, duration} = 
-        //res.status(201).json({ aircraft: aircraft });
+        res.status(201).json({ aircraft: aircraft });
     })
     .catch( err => {
         console.log("error creating aircrafts from DB", err);
