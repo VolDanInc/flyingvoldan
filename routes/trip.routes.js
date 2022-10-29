@@ -5,12 +5,20 @@ const Trip = require("../models/Trip.model");
 const mongoose = require('mongoose');
 //READ: list of all the trips
 
-router.get("/trips", (req, res, next) => {
+router.get("/trips/user/:userId", (req, res, next) => {
+  const userId = req.params.userId;
+  //console.log(userId);
   Trip.find()
     //.populate("aircraft")
     .then(tripsFromDb => {
-      // const {aircraftId, startTrip, duration} = 
-      res.status(201).json(tripsFromDb)
+      //console.log(tripsFromDb);
+      console.log(tripsFromDb[0].userId);
+      console.log(userId);
+      const individualTrips = tripsFromDb.filter((trip) => {
+        return trip.userId === userId;
+      })
+      //console.log(individualTrips);
+      res.status(201).json(individualTrips)
     })
     .catch(err => {
       console.log("error getting trips from DB", err);
@@ -25,7 +33,11 @@ router.post("/trips", (req, res, next) => {
 
   const tripDetails = {
     aircraftId: req.body.aircraftId,
+    userId: req.body.userId,
     startTrip: req.body.startTrip,
+    startTripNum: req.body.startTripNum,
+    review: req.body.review,
+    reviewStars: req.body.reviewStars,
     duration: req.body.duration
   }
 
