@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Trip = require("../models/Trip.model");
-const isAuthenticated = require("../middleware/jwt.middleware");
+//const isAuthenticated = require("../middleware/jwt.middleware");
 const mongoose = require('mongoose');
 //READ: list of all the trips
 
@@ -21,7 +21,7 @@ router.get("/trips", (req, res, next) => {
 
 
 //CREATE: process form
-router.post("/trips", isAuthenticated, (req, res, next) => {
+router.post("/trips", (req, res, next) => {
 
   const tripDetails = {
     aircraftId: req.body.aircraftId,
@@ -65,7 +65,7 @@ router.get("/trips/:tripId", (req, res, next) => {
 
 //UPDATE: trips
 
-router.put("/trips/:tripId", isAuthenticated, (req, res, next) => {
+router.put("/trips/:tripId", (req, res, next) => {
   const { tripId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(tripId)) {
@@ -85,7 +85,7 @@ router.put("/trips/:tripId", isAuthenticated, (req, res, next) => {
 
 //DELETE: trips
 
-router.delete("/trips/:tripId", isAuthenticated, (req, res, next) => {
+router.delete("/trips/:tripId", (req, res, next) => {
   const { tripId } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(tripId)) {
