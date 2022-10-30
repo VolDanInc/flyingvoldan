@@ -4,7 +4,7 @@ const { Schema, model } = mongoose;
 const tripSchema = new Schema(
   {
     aircraftId: { type: Schema.Types.ObjectId, ref: "Aircraft" },
-    userId: String,
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
     startTrip: String,
     startTripNum: Number,
     review: String,
@@ -16,8 +16,8 @@ const tripSchema = new Schema(
     duration: {
       type: String,
       enum: ["30", "60", "90", "120"]
-    }
-
+    },
+    peoplesNum: Number
   },
   {
     timestamps: true

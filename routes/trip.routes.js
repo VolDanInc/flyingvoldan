@@ -3,30 +3,59 @@ const router = express.Router();
 const Trip = require("../models/Trip.model");
 //const isAuthenticated = require("../middleware/jwt.middleware");
 const mongoose = require('mongoose');
+const User = require("../models/User.model");
 //READ: list of all the trips
 
 router.get("/trips/user/:userId", (req, res, next) => {
   const userId = req.params.userId;
-  //console.log(userId);
-  Trip.find()
-    //.populate("aircraft")
-    .then(tripsFromDb => {
-      //console.log(tripsFromDb);
-      console.log(tripsFromDb[0].userId);
-      console.log(userId);
-      const individualTrips = tripsFromDb.filter((trip) => {
-        return trip.userId === userId;
-      })
-      //console.log(individualTrips);
-      res.status(201).json(individualTrips)
+  User.findById(userId)
+    .then(user => {
+      Trip.find()
+        .populate("aircraftId")
+        .populate("userId")
+        .then(tripsFromDb => {
+          
+          if (user.isAdmin) {
+            //console.log("I'm in get request admin....");
+            res.status(201).json(tripsFromDb);
+          } else {
+            const individualTrips = tripsFromDb.filter((trip) => {
+              
+              console.log("I'm in get request user....");
+              
+              return trip.userId._id.toString() === user._id.toString();
+            })
+            
+            
+
+            res.status(201).json(individualTrips);
+          }
+        })
+        .catch(err => {
+          console.log("error getting trips from DB", err);
+          next(err);
+        })
     })
     .catch(err => {
-      console.log("error getting trips from DB", err);
+      console.log("error getting user from DB", err);
       next(err);
     })
 });
 
-
+router.get("/trips/comments", (req, res, next) => {
+  
+      Trip.find()
+        .populate("aircraftId")
+        .populate("userId")
+        .then(tripsFromDb => {
+          
+            res.status(201).json(tripsFromDb);
+          })
+        .catch(err => {
+          console.log("error getting trips from DB", err);
+          next(err);
+        })
+});
 
 //CREATE: process form
 router.post("/trips", (req, res, next) => {
@@ -38,7 +67,8 @@ router.post("/trips", (req, res, next) => {
     startTripNum: req.body.startTripNum,
     review: req.body.review,
     reviewStars: req.body.reviewStars,
-    duration: req.body.duration
+    duration: req.body.duration,
+    peoplesNum: req.body.peoplesNum
   }
 
   return Trip.create(tripDetails)
