@@ -8,7 +8,8 @@ const aircraftSchema = new Schema (
     description: String,
     price: Number,
     seats: Number,
-    timetable: []
+    timetable: [],
+    isBusy: []
   },
   {
     timestamps: true

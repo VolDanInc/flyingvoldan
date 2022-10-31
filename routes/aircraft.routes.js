@@ -22,9 +22,9 @@ router.get("/aircrafts", (req, res, next)=> {
 
 router.post("/aircrafts", (req, res, next)=> {
 
-    const {name, img, description, price, seats, timetable } = req.body;
+    const {name, img, description, price, seats, timetable, isBusy } = req.body;
 
-    return Aircraft.create({ name, img, description, price, seats, timetable })
+    return Aircraft.create({ name, img, description, price, seats, timetable, isBusy })
     .then(aircraft => {
         // const {aircraftId, startTrip, duration} = 
         res.status(201).json({ aircraft: aircraft });
