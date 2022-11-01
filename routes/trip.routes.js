@@ -94,7 +94,7 @@ router.get("/trips/:tripId", (req, res, next) => {
 
 
   Trip.findById(tripId)
-    //.populate('aircrafts')
+    .populate('aircraftId')
     .then(trip => res.json(trip))
     .catch(err => {
       console.log("error getting trip details...", err);
