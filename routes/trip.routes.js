@@ -20,14 +20,9 @@ router.get("/trips/user/:userId", (req, res, next) => {
             res.status(201).json(tripsFromDb);
           } else {
             const individualTrips = tripsFromDb.filter((trip) => {
-              
-              console.log("I'm in get request user....");
-              
+              //console.log("I'm in get request user....");
               return trip.userId._id.toString() === user._id.toString();
             })
-            
-            
-
             res.status(201).json(individualTrips);
           }
         })
@@ -68,7 +63,9 @@ router.post("/trips", (req, res, next) => {
     review: req.body.review,
     reviewStars: req.body.reviewStars,
     duration: req.body.duration,
-    peoplesNum: req.body.peoplesNum
+    peoplesNum: req.body.peoplesNum,
+    tripScore: req.body.tripScore,
+    tripStatus: req.body.tripStatus
   }
 
   return Trip.create(tripDetails)

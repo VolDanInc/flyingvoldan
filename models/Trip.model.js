@@ -17,7 +17,9 @@ const tripSchema = new Schema(
       type: String,
       enum: ["30", "60", "90", "120"]
     },
-    peoplesNum: Number
+    peoplesNum: Number,
+    tripScore: Number,
+    tripStatus: String
   },
   {
     timestamps: true
